@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["es6"],
+    "skipLibCheck": true,
+    "module": "CommonJS",
+    "outDir": "./"
+  },
+  "include": ["**/*"],
+  "exclude": ["**/*.spec.ts"]
+}
