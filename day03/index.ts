@@ -1,29 +1,33 @@
 import { readFileSync } from "fs";
 
 const data = readFileSync("./input.txt", { encoding: "utf8" });
+part1(data);
+part2(data);
 
-//Part 1
-//Use regex to find all mul(X,Y) operations
-let validOperations = extractOperations(data);
-let total = multiplyOperations(validOperations);
-console.log({ part1: total });
-
-//Part 2
-//Split into "don't()"" chunks. Each chunk is invalid until
-//the first do(). Then all are valid (no more donts because the instructions split)
-let chunks = data.split("don't()");
-let part2total = 0;
-for (let i = 0; i < chunks.length; i++) {
-  let dos = chunks[i].split("do()");
-  //The very first block is valid, as it is before the first don't
-  if (i > 0) {
-    //Remove the string up until the first do()
-    dos.shift();
-  }
-  part2total += parseChunks(dos);
+function part1(data: string) {
+  //Use regex to find all mul(X,Y) operations
+  let validOperations = extractOperations(data);
+  let total = multiplyOperations(validOperations);
+  console.log({ part1: total });
 }
 
-console.log({ part2: part2total });
+function part2(data: string) {
+  //Split into "don't()"" chunks. Each chunk is invalid until
+  //the first do(). Then all are valid (no more donts because the instructions split)
+  let chunks = data.split("don't()");
+  let part2total = 0;
+  for (let i = 0; i < chunks.length; i++) {
+    let dos = chunks[i].split("do()");
+    //The very first block is valid, as it is before the first don't
+    if (i > 0) {
+      //Remove the string up until the first do()
+      dos.shift();
+    }
+    part2total += parseChunks(dos);
+  }
+
+  console.log({ part2: part2total });
+}
 
 /**
  * Takes array of strings containing operations and returns multiplied totals
