@@ -5,7 +5,7 @@ readFile("day03/input", (data: string) => {
   //Use regex to find all mul(X,Y) operations
   let validOperations = extractOperations(data);
   let total = multiplyOperations(validOperations);
-  console.log({ part12: total });
+  console.log({ part1: total });
 
   //Part 2
   //Split into "don't()"" chunks. Each chunk is invalid until
@@ -59,7 +59,7 @@ function extractOperations(instructionString: string): string[] {
 function multiplyOperations(operations: string[]): number {
   let total = 0;
   for (const operation of operations) {
-    total += parseInstruction(operation);
+    total += executeOperation(operation);
   }
   return total;
 }
@@ -69,7 +69,7 @@ function multiplyOperations(operations: string[]): number {
  * @param instruction string
  * @returns number
  */
-function parseInstruction(instruction: string): number {
+function executeOperation(instruction: string): number {
   //Get the two operands from operations
   let [a, b] = instruction.slice(4, instruction.length - 1).split(",");
   return parseInt(a) * parseInt(b);

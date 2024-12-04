@@ -3,6 +3,7 @@
     "lib": ["es6"],
     "skipLibCheck": true,
     "module": "CommonJS",
+    "noEmit": true,
     "outDir": "./"
   },
   "include": ["**/*"],
