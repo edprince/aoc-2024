@@ -1,38 +1,30 @@
-let fs = require("fs/promises");
-import * as path from "path";
+import { readFileSync } from "fs";
 
-(async () => {
-  try {
-    const data = await fs.readFile(path.join(__dirname, "input.txt"), "utf8");
-    let reports = data.split("\n");
+const data = readFileSync("./input.txt", { encoding: "utf8" });
+let reports = data.split("\n");
+reports.pop();
 
-    reports.pop();
-
-    const reportArrays = reports.map((level: string) => {
-      return level.split(" ").map((lvl: string) => parseInt(lvl));
-    });
-    let safe = 0;
-    for (const report of reportArrays) {
-      if (checkSafety(report)) {
-        safe += 1;
-        continue;
-      }
-
-      //Check for dampened safety
-      for (let i = 0; i < report.length; i++) {
-        let reducedReport = [...report];
-        reducedReport.splice(i, 1);
-        if (checkSafety(reducedReport)) {
-          safe += 1;
-          break;
-        }
-      }
-    }
-    console.log({ safe });
-  } catch (err) {
-    console.error(err);
+const reportArrays = reports.map((level: string) => {
+  return level.split(" ").map((lvl: string) => parseInt(lvl));
+});
+let safe = 0;
+for (const report of reportArrays) {
+  if (checkSafety(report)) {
+    safe += 1;
+    continue;
   }
-})();
+
+  //Check for dampened safety
+  for (let i = 0; i < report.length; i++) {
+    let reducedReport = [...report];
+    reducedReport.splice(i, 1);
+    if (checkSafety(reducedReport)) {
+      safe += 1;
+      break;
+    }
+  }
+}
+console.log({ safe });
 
 function checkSafety(report: number[]) {
   let safe = true;

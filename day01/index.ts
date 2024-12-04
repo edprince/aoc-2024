@@ -1,19 +1,13 @@
-let fs = require("fs/promises");
-let path = require("path");
+import { readFileSync } from "fs";
 
-(async () => {
-  try {
-    const data = await fs.readFile(path.join(__dirname, "input.txt"), "utf8");
-    let [listA, listB] = splitList(data);
-    //Puzzle 01
-    let difference = calculateDifference(listA, listB);
-    //Puzzle 02
-    let similarity = calculateSimilarityScore(listA, listB);
-    console.log({ difference, similarity });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const data = readFileSync("./input.txt", { encoding: "utf8" });
+
+let [listA, listB] = splitList(data);
+//Puzzle 01
+let difference = calculateDifference(listA, listB);
+//Puzzle 02
+let similarity = calculateSimilarityScore(listA, listB);
+console.log({ difference, similarity });
 
 function calculateSimilarityScore(listA: number[], listB: number[]): number {
   let similarityScore = 0;
