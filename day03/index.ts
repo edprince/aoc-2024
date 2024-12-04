@@ -7,7 +7,7 @@ part2(data);
 function part1(data: string) {
   //Use regex to find all mul(X,Y) operations
   let validOperations = extractOperations(data);
-  let total = multiplyOperations(validOperations);
+  let total = processOperations(validOperations);
   console.log({ part1: total });
 }
 
@@ -40,7 +40,7 @@ function parseChunks(chunk: string[]): number {
     //Match all mul(X,Y) operations
     let validOperations = extractOperations(doInstruction);
     //Parse list of mul(X,Y) operations and add to accumulator
-    total += multiplyOperations(validOperations);
+    total += processOperations(validOperations);
   }
   return total;
 }
@@ -60,7 +60,7 @@ function extractOperations(instructionString: string): string[] {
  * @param operations array of operations
  * @returns
  */
-function multiplyOperations(operations: string[]): number {
+function processOperations(operations: string[]): number {
   let total = 0;
   for (const operation of operations) {
     total += executeOperation(operation);
@@ -73,8 +73,8 @@ function multiplyOperations(operations: string[]): number {
  * @param instruction string
  * @returns number
  */
-function executeOperation(instruction: string): number {
+function executeOperation(operation: string): number {
   //Get the two operands from operations
-  let [a, b] = instruction.slice(4, instruction.length - 1).split(",");
+  let [a, b] = operation.slice(4, operation.length - 1).split(",");
   return parseInt(a) * parseInt(b);
 }
