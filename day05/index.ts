@@ -54,14 +54,10 @@ function splitRulesAndUpdates(input: string): [string[], string[][]] {
 
 function reOrderUpdate(update: string[], dictionary: Dictionary): number {
   //Sort the array by making sure each item comes before any of its dependencies
-  console.log(update);
-  console.log(dictionary);
   update.sort((a: string, b: string) => {
-    let ADependencies = dictionary[a];
     if (dictionary[a]?.includes(b)) return -1;
     return 0;
   });
-  console.log({ sorted: update });
   return Number(update[Math.floor(update.length / 2)]);
 }
 
