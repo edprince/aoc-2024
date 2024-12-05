@@ -4,6 +4,7 @@
     "skipLibCheck": true,
     "module": "CommonJS",
     "noEmit": true,
+    "downlevelIteration": true,
     "outDir": "./"
   },
   "include": ["**/*"],

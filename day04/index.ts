@@ -16,6 +16,7 @@ console.log("Part2: ", part2(input));
 function part2(wordsearch: string): number {
   let grid = wordsearch
     .split("\n")
+    //remove empty row at the end
     .filter((line) => line.trim() !== "")
     .map((line) => line.split(""));
 
@@ -30,10 +31,7 @@ function part2(wordsearch: string): number {
         let tile2 = grid[y + 1][x + 1];
         let tile3 = grid[y - 1][x + 1];
         let tile4 = grid[y + 1][x - 1];
-        if (
-          checkAdjacentTiles(tile1, tile2) &&
-          checkAdjacentTiles(tile3, tile4)
-        ) {
+        if (checkTwoTiles(tile1, tile2) && checkTwoTiles(tile3, tile4)) {
           total += 1;
         }
       }
@@ -42,7 +40,7 @@ function part2(wordsearch: string): number {
   return total;
 }
 
-function checkAdjacentTiles(tile1: string, tile2: string): boolean {
+function checkTwoTiles(tile1: string, tile2: string): boolean {
   if ((tile1 === "M" && tile2 === "S") || (tile1 === "S" && tile2 === "M")) {
     return true;
   }
