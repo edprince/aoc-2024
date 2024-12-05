@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import { equal } from "assert";
-import { O } from "nextra/dist/types-c8e621b7";
 
 const test = readFileSync("./testInput.txt", { encoding: "utf8" });
 const input = readFileSync("./input.txt", { encoding: "utf8" });
