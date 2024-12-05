@@ -8,7 +8,7 @@ equal(part1(test), 143);
 equal(part1(input), 5275);
 
 equal(part2(test), 123);
-equal(part2(input), 0);
+equal(part2(input), 6191);
 
 type Dictionary = {
   [key: string]: string[];
@@ -30,17 +30,19 @@ function part2(input: string): number {
   let dictionary = createDictionary(rules);
   let total = 0;
   for (const update of updates) {
-    let res = checkDependencies(update, dictionary);
-    if (!res) {
-      //Order update
+    if (!checkDependencies(update, dictionary)) {
       let middle = reOrderUpdate(update, dictionary);
-      //Add middle to total
       total += middle;
     }
   }
   return total;
 }
 
+/**
+ * Takes string input and splits into usable data structures
+ * @param input - string
+ * @returns array of upages, and a dictionary of page dependencies
+ */
 function splitRulesAndUpdates(input: string): [string[], string[][]] {
   let rules = input.split("\n").slice(0, -1);
   let breakIndex = rules.indexOf("");
@@ -52,6 +54,12 @@ function splitRulesAndUpdates(input: string): [string[], string[][]] {
   return [rules, updates];
 }
 
+/**
+ * Sorts an update based on required pages
+ * @param update - array of pages
+ * @param dictionary - rules for page-dependencies
+ * @returns middle number of a sorted update
+ */
 function reOrderUpdate(update: string[], dictionary: Dictionary): number {
   //Sort the array by making sure each item comes before any of its dependencies
   update.sort((a: string, b: string) => {
@@ -61,6 +69,12 @@ function reOrderUpdate(update: string[], dictionary: Dictionary): number {
   return Number(update[Math.floor(update.length / 2)]);
 }
 
+/**
+ *
+ * @param update
+ * @param dictionary
+ * @returns
+ */
 function checkDependencies(update: string[], dictionary: Dictionary): number {
   let ordered = true;
   for (const [index, page] of update.entries()) {
