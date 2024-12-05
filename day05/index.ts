@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { equal } from "assert";
+import { O } from "nextra/dist/types-c8e621b7";
 
 const test = readFileSync("./testInput.txt", { encoding: "utf8" });
 const input = readFileSync("./input.txt", { encoding: "utf8" });
@@ -17,23 +18,22 @@ type Dictionary = {
 function part1(input: string): number {
   let [rules, updates] = splitRulesAndUpdates(input);
   let dictionary = createDictionary(rules);
-  let total = 0;
-  for (const update of updates) {
-    total += validateUpdate(update, dictionary);
-  }
-  return total;
+
+  return updates.reduce((total, update) => {
+    return total + validateUpdate(update, dictionary);
+  }, 0);
 }
 
 function part2(input: string): number {
   let [rules, updates] = splitRulesAndUpdates(input);
   let dictionary = createDictionary(rules);
-  let total = 0;
-  for (const update of updates) {
+
+  return updates.reduce((total: number, update: string[]) => {
     if (!validateUpdate(update, dictionary)) {
-      total += reOrderUpdate(update, dictionary);
+      return total + reOrderUpdate(update, dictionary);
     }
-  }
-  return total;
+    return total;
+  }, 0);
 }
 
 /**
