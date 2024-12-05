@@ -15,12 +15,11 @@ type Dictionary = {
 };
 
 function part1(input: string): number {
-  let total = 0;
   let [rules, updates] = splitRulesAndUpdates(input);
   let dictionary = createDictionary(rules);
+  let total = 0;
   for (const update of updates) {
-    let res = checkDependencies(update, dictionary);
-    total += res;
+    total += validateUpdate(update, dictionary);
   }
   return total;
 }
@@ -30,9 +29,8 @@ function part2(input: string): number {
   let dictionary = createDictionary(rules);
   let total = 0;
   for (const update of updates) {
-    if (!checkDependencies(update, dictionary)) {
-      let middle = reOrderUpdate(update, dictionary);
-      total += middle;
+    if (!validateUpdate(update, dictionary)) {
+      total += reOrderUpdate(update, dictionary);
     }
   }
   return total;
@@ -75,18 +73,17 @@ function reOrderUpdate(update: string[], dictionary: Dictionary): number {
  * @param dictionary
  * @returns
  */
-function checkDependencies(update: string[], dictionary: Dictionary): number {
+function validateUpdate(update: string[], dictionary: Dictionary): number {
   let ordered = true;
   for (const [index, page] of update.entries()) {
+    //Check that none of the preceeding pages are a dependency of this page
     let preceedingPages = update.slice(0, index);
     let dependencies = dictionary[page];
     if (preceedingPages.length > 0 && dependencies?.length > 0) {
-      let dependent = containsDependencies(preceedingPages, dependencies);
-      if (dependent) ordered = false;
+      if (containsDependencies(preceedingPages, dependencies)) ordered = false;
     }
   }
-  let middle = update[Math.floor(update.length / 2)];
-  return ordered ? Number(middle) : 0;
+  return ordered ? Number(update[Math.floor(update.length / 2)]) : 0;
 }
 
 /**
