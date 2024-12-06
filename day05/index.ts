@@ -1,6 +1,10 @@
 import { readFileSync } from "fs";
 import { equal } from "assert";
 
+type Dictionary = {
+  [key: string]: string[];
+};
+
 const test = readFileSync("./testInput.txt", { encoding: "utf8" });
 const input = readFileSync("./input.txt", { encoding: "utf8" });
 
@@ -9,10 +13,6 @@ equal(part1(input), 5275);
 
 equal(part2(test), 123);
 equal(part2(input), 6191);
-
-type Dictionary = {
-  [key: string]: string[];
-};
 
 function part1(input: string): number {
   let [rules, updates] = splitRulesAndUpdates(input);
