@@ -47,11 +47,9 @@ class Guard {
   }
 
   step() {
-    let nextX = this.X;
-    let nextY = this.Y;
     let { movement } = movements[this.orientation];
-    nextX = this.X + movement[0];
-    nextY = this.Y + movement[1];
+    let nextX = this.X + movement[0];
+    let nextY = this.Y + movement[1];
     if (this.MAP[nextY][nextX] === "#") {
       this.turn();
       this.step();
@@ -68,7 +66,7 @@ class Guard {
 }
 
 equal(part1(TEST), 41);
-//equal(part1(INPUT), 5534);
+equal(part1(INPUT), 5534);
 
 function part1(map: Map) {
   let startingPosition = findCharacter(map, "^");
@@ -118,11 +116,8 @@ function renderMap(map: Map, guard: Guard) {
 
 function findCharacter(map: Character[][], char: Character): Coord {
   for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x] === char) {
-        return [x, y];
-      }
-    }
+    let found = map[y].indexOf("^");
+    if (found > 0) return [found, y];
   }
 }
 
